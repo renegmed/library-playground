@@ -1,0 +1,70 @@
+Status: wip 
+
+
+Title: Kubernetes Ingress Resources | Using Ingress resources to expose your application
+URL: https://www.youtube.com/watch?v=8eCP3CK7BDQ
+Github: https://github.com/viveksinghggits/library
+
+
+
+After cloning to go branch 
+
+    $ git checkout helm-repo-host 
+
+    $ mkdir charts 
+
+Package the existing chart 
+
+    $ helm package helm -d charts
+
+Generate index file 
+
+    $ helm repo index charts 
+
+    To manually generate shasum
+
+    $ cd charts
+    $ shasum -a 256 Library-0.1.0.tgz 
+
+Publish charts publicly 
+
+    Method 1: using github 
+
+        $ git add charts/ helm/Chart.yaml 
+        $ git commint -m "Create chart report" 
+        $ git push origin helm-repo-host 
+
+        Go Setting -> GitHub Pages 
+            Source -> Branch: helm-repo-host  /root   -> Save 
+
+        Result:
+            Your site is ready to be published at https://xxxxxxxxxxxxxx  This the helm repo 
+
+
+Add Github helm repo to local environment 
+
+    $ helm report add viveks https://viveksighgits.github.io/library/charts
+
+    Use $ helm repo update to update existing old version of the same chart 
+
+    
+
+    $ helm install lib viveks/Library 
+
+    $ helm repo list 
+
+    See kubectl get ns, should see database and restapi namespaces 
+
+    $ kubectl get pod -n database 
+
+    $ kubectl get  pvc -n database 
+    mysql pv claim is not bounded to pvc. Need to bind them 
+
+    $ kubectl sc
+
+    $ kubectl delete lib 
+
+
+    $ helm install lib viveks/Library --set database.volume.storageClassName=do-block-storage 
+
+    $ kubectl get pvc -n database 
