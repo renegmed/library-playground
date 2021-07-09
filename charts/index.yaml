@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  Library:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2021-07-09T19:51:42.329193033-04:00"
+    description: A Helm chart for demo chart package
+    digest: 71736807fda4336ce1d75f92655105933ae8cf84e7e21bf6044bc80ecb97feff
+    name: Library
+    type: application
+    urls:
+    - Library-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-07-09T19:51:42.328232129-04:00"
