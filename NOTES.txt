@@ -38,20 +38,36 @@ Publish charts publicly
             Source -> Branch: helm-repo-host  /root   -> Save 
 
         Result:
-            Your site is ready to be published at https://xxxxxxxxxxxxxx  This the helm repo 
+            Your site is ready to be published at  https://renegmed.github.io/library-playground/   This the helm repo 
 
 
 Add Github helm repo to local environment 
 
-    $ helm report add viveks https://viveksighgits.github.io/library/charts
+    $ helm repo add library https://renegmed.github.io/library-playground/charts
 
     Use $ helm repo update to update existing old version of the same chart 
 
+
+
+    $ helm install lib library/Library     
+    NAME: lib
+    LAST DEPLOYED: Fri Jul  9 20:02:07 2021
+    NAMESPACE: default
+    STATUS: deployed
+    REVISION: 1
+    NOTES:
+    1. Get the application URL by running these commands:
+      export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=Library,app.kubernetes.io/instance=lib" -o jsonpath="{.items[0].metadata.name}")
+      echo "Visit http://127.0.0.1:8080 to use your application"
+      kubectl --namespace default port-forward $POD_NAME 8080:80
+
     
-
-    $ helm install lib viveks/Library 
-
     $ helm repo list 
+
+    NAME    URL                                                 
+     
+    library https://renegmed.github.io/library-playground/charts
+
 
     See kubectl get ns, should see database and restapi namespaces 
 
@@ -65,6 +81,62 @@ Add Github helm repo to local environment
     $ kubectl delete lib 
 
 
-    $ helm install lib viveks/Library --set database.volume.storageClassName=do-block-storage 
+    $ helm install lib library/Library --set database.volume.storageClassName=do-block-storage 
 
     $ kubectl get pvc -n database 
+
+
+Update database 
+
+    $ kubectl exec -it pod/mysql-6df55bffdc-sd4sb -n database -- bin/bash 
+
+        root@mysql-6df55bffdc-sd4sb:/# mysql -u root -p 
+
+        root@mysql-6df55bffdc-sd4sb:/# create database library;
+
+        root@mysql-6df55bffdc-sd4sb:/# use library;
+
+        root@mysql-6df55bffdc-sd4sb:/# create table books (id varchar(100), name varchar(100), isbn varchar(100));
+
+        root@mysql-6df55bffdc-sd4sb:/# insert into books values ("1", "The Everything Store", "ISBN-1");
+
+
+Create port forward for restapi 
+
+    $ kubectl port-forward svc/restapi -n restapi 8080
+
+Test restapi 
+
+    $ curl localhost:8080/apis/v1/books
+
+    [{"Id":"1","Name":"The Everything Store","Isbn":"ISBN-1"}]
+
+    $ curl -XPOST localhost:8080/apis/v1/books -d '{"Id":"2","Name":"The Lab Rat","Isbn":"ISBN-2"}'
+
+    $ curl localhost:8080/apis/v1/books
+    [{"Id":"1","Name":"The Everything Store","Isbn":"ISBN-1"},
+     {"Id":"2","Name":"The Lab Rat","Isbn":"ISBN-2"}]
+
+  
+---------------------------------------------------------
+
+
+
+
+$ helm install lib library/Library
+NAME: lib
+LAST DEPLOYED: Fri Jul  9 20:02:07 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=Library,app.kubernetes.io/instance=lib" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:80
+
+            
+
+
+
+
