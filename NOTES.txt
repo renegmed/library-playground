@@ -31,7 +31,7 @@ Publish charts publicly
     Method 1: using github 
 
         $ git add charts/ helm/Chart.yaml 
-        $ git commint -m "Create chart report" 
+        $ git commit -m "Create chart report" 
         $ git push origin helm-repo-host 
 
         Go Setting -> GitHub Pages 
@@ -139,4 +139,24 @@ NOTES:
 
 
 
+----------------  Using Ingress resources to expose your application --------------------- 
+ 
 
+ NOTE: using minikube, there is no need to install ingress controller
+       Minikube provides its own ingress controller
+
+		$ kubect get all -n kube-system 
+		
+  			pod/ingress-nginx-controller-558664778f-lkgt9   1/1     Running     9          29d
+
+        $ kubectl addon list  - ingress should be enabled 
+
+
+    $ make install-ingress 
+
+    $ kubectl get ingress -n restapi 
+    
+
+    $ make post1 
+
+    $ make list
