@@ -1,4 +1,4 @@
-Status: wip 
+Status: working 
 
 
 Title: Kubernetes Ingress Resources | Using Ingress resources to expose your application
