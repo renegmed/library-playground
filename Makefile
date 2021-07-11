@@ -1,3 +1,14 @@
+package-charts:
+	helm package helm -d charts
+
+index-charts:
+	helm repo index charts 
+
+# ----------------------------------------------
+	
+dryrun-helm:
+	helm install helm helm -f helm/values.yaml --dry-run > test-helm.yaml 
+	
 add-repo:
 	helm repo add library https://renegmed.github.io/library-playground/charts
 

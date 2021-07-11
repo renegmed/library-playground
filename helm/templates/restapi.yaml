@@ -19,7 +19,7 @@ spec:
         app: restapi
     spec:
       containers:
-      - image: viveksinghggits/library:0.1.0
+      - image: {{ .Values.application.image }}
         name: library
         resources: {}
         env:

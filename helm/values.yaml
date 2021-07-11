@@ -8,6 +8,7 @@ database:
   rootPassword: vivek
 application:
   name: ''
+  image: renegmedal/library:latest
 
 replicaCount: 1
 
